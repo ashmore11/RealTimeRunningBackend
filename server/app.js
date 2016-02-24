@@ -1,3 +1,5 @@
+require('dotenv').config({ silent: true });
+
 var express    = require('express');
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
@@ -11,7 +13,7 @@ var port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://ashmore11:13-cheese-ass@ds015398.mongolab.com:15398/real_time_running');
+mongoose.connect(process.env.MONGOLAB_URI);
 
 // Routes for our api
 var router = express.Router();

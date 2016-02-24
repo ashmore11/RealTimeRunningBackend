@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "gulp": "^3.7.0",
-    "gulp-nodemon": "^2.0.4"
+    "gulp-nodemon": "^2.0.4",
+    "dotenv": "^1.1.0"
   },
   "engine": "node >= 0.6.6",
   "scripts": {
