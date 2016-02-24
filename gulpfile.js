@@ -7,6 +7,8 @@ gulp.task('default', function() {
     script: 'server/app.js',
     ignore: [
       'node_modules',
+      'package.json',
+      'gulpfile.js',
     ],
   });
 
