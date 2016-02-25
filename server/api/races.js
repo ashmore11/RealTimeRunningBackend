@@ -1,4 +1,5 @@
-var RaceModel = require('../models/race');
+var EventEmitter = require('../eventEmitter');
+var RaceModel    = require('../models/race');
 
 var RaceApi = {
 
@@ -20,9 +21,11 @@ var RaceApi = {
 
   },
 
-  get: function get(res) {
+  get: function get(id, res) {
 
-    RaceModel.find(function(err, races) {
+    var params = id !== null ? { _id: id } : {}
+
+    RaceModel.find(params, function(err, races) {
 
       if (err) res.send(err);
 
@@ -36,13 +39,13 @@ var RaceApi = {
 
     RaceModel.update(
       { _id: id },
-      { $set: data },
-      { upsert: false },
-      function(err, doc) {
+      { $addToSet: { "competitors": data.id } },
+      { safe: true, upsert: true },
+      function(err) {
 
         if (err) res.send(err);
 
-        res.json({ message: 'Successfully updated user...' });
+        res.json({ message: 'Successfully updated race...' });
 
       }
 

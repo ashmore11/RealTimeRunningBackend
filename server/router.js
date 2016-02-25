@@ -77,7 +77,17 @@ var AppRouter = {
 
     route.get(function(req, res) {
 
-      RaceApi.get(res);
+      RaceApi.get(null, res);
+
+    });
+
+  },
+
+  getRace: function getRace(route) {
+
+    route.get(function(req, res) {
+
+      RaceApi.get(req.params.id, res);
 
     });
 
@@ -85,9 +95,9 @@ var AppRouter = {
 
   updateRace: function updateRace(route) {
 
-    route.get(function(req, res) {
+    route.put(function(req, res) {
 
-      RaceApi.update(req.params.id, res);
+      RaceApi.update(req.params.id, req.body, res);
 
     });
 

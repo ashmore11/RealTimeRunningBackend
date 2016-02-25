@@ -66,6 +66,8 @@ var UserApi = {
 
       res.json({ message: 'Successfully deleted user...' });
 
+      EventEmitter.emit('user:removed');
+
     });
 
   },

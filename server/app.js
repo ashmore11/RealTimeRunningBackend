@@ -38,19 +38,18 @@ AppRouter.updateUser(router.route('/users/:id'));
 AppRouter.removeUser(router.route('/users/:id'));
 AppRouter.createRace(router.route('/races'));
 AppRouter.getRaces(router.route('/races'));
-AppRouter.updateRace(router.route('/races'));
+AppRouter.getRace(router.route('/races/:id'));
+AppRouter.updateRace(router.route('/races/:id'));
 
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 
 // Start the server
-// app.listen(port);
-
 var server = http.createServer(app);
 
 server.listen(port, function() {
 
-  console.log('Listening on http://localhost: ' + port);
+  console.log('Listening on http://localhost:' + port);
 
   Sockets.init(server);
 
