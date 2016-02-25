@@ -1,4 +1,5 @@
-var UserModel = require('../models/user');
+var EventEmitter = require('../eventEmitter');
+var UserModel    = require('../models/user');
 
 var UserApi = {
 
@@ -16,6 +17,8 @@ var UserApi = {
       if (err) res.send(err);
 
       res.json({ message: 'Successfully created user...' });
+
+      EventEmitter.emit('user:created');
 
     });
 
@@ -41,11 +44,13 @@ var UserApi = {
       { fbid: id },
       { $set: data },
       { upsert: true },
-      (err, doc) => {
+      function(err, doc) {
 
         if (err) res.send(err);
 
         res.json({ message: 'Successfully updated user...' });
+
+        EventEmitter.emit('user:updated');
 
       }
 

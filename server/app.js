@@ -1,9 +1,13 @@
 require('dotenv').config({ silent: true });
 
+var http       = require('http');
 var express    = require('express');
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
+var io         = require('socket.io');
+var Sockets    = require('./sockets');
 var AppRouter  = require('./router');
+var timeKeeper = require('./timeKeeper');
 
 var app  = express();
 var port = process.env.PORT || 3000;
@@ -34,11 +38,22 @@ AppRouter.updateUser(router.route('/users/:id'));
 AppRouter.removeUser(router.route('/users/:id'));
 AppRouter.createRace(router.route('/races'));
 AppRouter.getRaces(router.route('/races'));
+AppRouter.updateRace(router.route('/races'));
 
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 
 // Start the server
-app.listen(port);
+// app.listen(port);
 
-console.log('Listening on http://localhost: ' + port);
+var server = http.createServer(app);
+
+server.listen(port, function() {
+
+  console.log('Listening on http://localhost: ' + port);
+
+  Sockets.init(server);
+
+});
+
+setInterval(timeKeeper, 1000);

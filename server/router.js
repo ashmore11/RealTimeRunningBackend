@@ -83,6 +83,16 @@ var AppRouter = {
 
   },
 
+  updateRace: function updateRace(route) {
+
+    route.get(function(req, res) {
+
+      RaceApi.update(req.params.id, res);
+
+    });
+
+  },
+
 };
 
 module.exports = AppRouter;

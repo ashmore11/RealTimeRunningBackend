@@ -10,8 +10,6 @@ var RaceApi = {
       distance: data.distance,
     });
 
-    console.log(race);
-
     race.save(function(err) {
 
       if (err) res.send(err);
@@ -29,6 +27,36 @@ var RaceApi = {
       if (err) res.send(err);
 
       res.json(races);
+
+    });
+
+  },
+
+  update: function update(id, data, res) {
+
+    RaceModel.update(
+      { _id: id },
+      { $set: data },
+      { upsert: false },
+      function(err, doc) {
+
+        if (err) res.send(err);
+
+        res.json({ message: 'Successfully updated user...' });
+
+      }
+
+    );
+
+  },
+
+  remove: function remove(id, res) {
+
+    RaceModel.remove({ _id: id }, function(err) {
+
+      if (err) res.send(err);
+
+      res.json({ message: 'Successfully deleted race...' });
 
     });
 
