@@ -1,16 +1,23 @@
 require('dotenv').config({ silent: true });
 
-var http       = require('http');
 var express    = require('express');
+var app        = express();
+var server     = require('http').Server(app);
+var io         = require('socket.io')(server);
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
-var io         = require('socket.io');
 var Sockets    = require('./sockets');
 var AppRouter  = require('./router');
 var timeKeeper = require('./timeKeeper');
+var port       = process.env.PORT || 3000;
 
-var app  = express();
-var port = process.env.PORT || 3000;
+server.listen(port);
+
+io.on('connection', function(socket) {
+
+  Sockets.init(socket);
+
+});
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -43,16 +50,5 @@ AppRouter.updateRace(router.route('/races/:id'));
 
 // all of our routes will be prefixed with /api
 app.use('/api', router);
-
-// Start the server
-var server = http.createServer(app);
-
-server.listen(port, function() {
-
-  console.log('Listening on http://localhost:' + port);
-
-  Sockets.init(server);
-
-});
 
 setInterval(timeKeeper, 1000);

@@ -3,7 +3,7 @@ var UserModel    = require('../models/user');
 
 var UserApi = {
 
-  create: function create(data, res) {
+  create: function create(data) {
 
     var user = UserModel({
       fbid: data.fbid,
@@ -17,8 +17,6 @@ var UserApi = {
       if (err) res.send(err);
 
       res.json({ message: 'Successfully created user...' });
-
-      EventEmitter.emit('user:created');
 
     });
 
@@ -50,8 +48,6 @@ var UserApi = {
 
         res.json({ message: 'Successfully updated user...' });
 
-        EventEmitter.emit('user:updated');
-
       }
 
     );
@@ -65,8 +61,6 @@ var UserApi = {
       if (err) res.send(err);
 
       res.json({ message: 'Successfully deleted user...' });
-
-      EventEmitter.emit('user:removed');
 
     });
 

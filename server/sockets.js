@@ -1,22 +1,10 @@
-var EventEmitter = require('./eventEmitter');
-var io           = require('socket.io');
-
 var Sockets = {
 
-  server: null,
   socket: null,
 
-  init: function init(server) {
+  init: function init(socket) {
 
-    this.server = io.listen(server);
-
-    this.server.sockets.on('connection', this.clientConnected.bind(this));
-
-  },
-
-  clientConnected: function clientConnected(socket) {
-
-    console.log('Client Connected');
+    console.log('socket connected');
 
     this.socket = socket;
 
@@ -26,20 +14,21 @@ var Sockets = {
 
   bind: function bind() {
 
-    EventEmitter.once('user:created', this.userCreated.bind(this));
-    EventEmitter.once('user:updated', this.userUpdated.bind(this));
+    this.socket.on('raceUpdated', this.raceUpdated.bind(this));
+
+    this.socket.on('disconnect', this.disconnected.bind(this));
 
   },
 
-  userCreated: function userCreated() {
+  raceUpdated: function raceUpdated() {
 
-    console.log('user created');
+    this.socket.emit('reloadRaceView');
 
   },
 
-  userUpdated: function userUpdated() {
+  disconnected: function disconnected() {
 
-    this.socket.emit('user:updated');
+    console.log('socket disconnected');
 
   },
 
