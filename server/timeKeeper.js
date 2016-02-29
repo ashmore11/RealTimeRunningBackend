@@ -1,4 +1,4 @@
-var RaceHandler = require('./RaceHandler');
+var RaceHandler = require('./raceHandler');
 
 module.exports = function timeKeeper() {
 
