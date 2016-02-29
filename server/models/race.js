@@ -1,18 +1,22 @@
 var Mongoose = require('mongoose');
 
 var raceSchema = new Mongoose.Schema({
-  startTime: {
+  createdAt: {
     type: String,
     required: true,
   },
   competitors: {
     type: Array,
-    required: true,
+    required: false,
   },
   distance: {
     type: Number,
     required: true,
-  }
+  },
+  live: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 var Race = Mongoose.model('Race', raceSchema);

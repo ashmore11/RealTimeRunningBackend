@@ -26,7 +26,7 @@ var RaceApi = {
 
     var params = id !== null ? { _id: id } : {}
 
-    RaceModel.find(params, function(err, races) {
+    RaceModel.find(params).sort({ createdAt: 1 }).exec(function(err, races) {
 
       if (err) res.send(err);
 
