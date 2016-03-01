@@ -4,24 +4,6 @@ var RaceModel    = require('../models/race');
 
 var RaceApi = {
 
-  create: function create(data, res) {
-
-    var race = RaceModel({
-      startTime: data.startTime,
-      competitors: data.competitors,
-      distance: data.distance,
-    });
-
-    race.save(function(err) {
-
-      if (err) res.send(err);
-
-      res.json({ message: 'successfully created race...' });
-
-    });
-
-  },
-
   get: function get(id, res) {
 
     var params = id !== null ? { _id: id } : {}
@@ -90,18 +72,6 @@ var RaceApi = {
       }
 
     );
-
-  },
-
-  remove: function remove(id, res) {
-
-    RaceModel.remove({ _id: id }, function(err) {
-
-      if (err) res.send(err);
-
-      res.json({ message: 'successfully deleted race...' });
-
-    });
 
   },
 

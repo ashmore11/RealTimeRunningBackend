@@ -20,9 +20,9 @@ var Sockets = {
 
   },
 
-  raceUpdated: function raceUpdated(raceIndex, raceId) {
+  raceUpdated: function raceUpdated(index, id) {
 
-    this.socket.emit('reloadRaceView', raceIndex, raceId);
+    this.socket.emit('reloadRaceView', index, id);
 
   },
 

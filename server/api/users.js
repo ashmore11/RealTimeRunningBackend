@@ -54,18 +54,6 @@ var UserApi = {
 
   },
 
-  remove: function remove(id, res) {
-
-    UserModel.remove({ fbid: id }, function(err) {
-
-      if (err) res.send(err);
-
-      res.json({ message: 'Successfully deleted user...' });
-
-    });
-
-  },
-
 };
 
 module.exports = UserApi;
