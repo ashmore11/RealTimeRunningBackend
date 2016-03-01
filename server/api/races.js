@@ -1,6 +1,5 @@
-var _            = require('underscore');
-var EventEmitter = require('../eventEmitter');
-var RaceModel    = require('../models/race');
+var _         = require('underscore');
+var RaceModel = require('../models/race');
 
 var RaceApi = {
 

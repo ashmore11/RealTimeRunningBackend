@@ -1,5 +1,4 @@
-var EventEmitter = require('../eventEmitter');
-var UserModel    = require('../models/user');
+var UserModel = require('../models/user');
 
 var UserApi = {
 
