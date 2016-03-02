@@ -39,7 +39,7 @@ var RaceApi = {
 
     RaceModel.update(
       { _id: raceId },
-      { $addToSet: { "competitors": { [userId]: 0.0 } },
+      { $addToSet: { "competitors": { [userId]: 0.0 } } },
       { safe: true, upsert: true },
       function(err) {
 
