@@ -1,11 +1,13 @@
 var Sockets = {
 
+  io: null,
   socket: null,
 
-  init: function init(socket) {
+  init: function init(io, socket) {
 
     console.log('socket connected');
 
+    this.io = io;
     this.socket = socket;
 
     this.bind();
@@ -23,7 +25,7 @@ var Sockets = {
 
   raceUpdated: function raceUpdated(index, id) {
 
-    this.socket.emit('reloadRaceView', index, id);
+    this.io.emit('reloadRaceView', index, id);
 
   },
 

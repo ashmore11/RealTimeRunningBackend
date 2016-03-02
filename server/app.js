@@ -15,7 +15,7 @@ server.listen(port);
 
 io.on('connection', function(socket) {
 
-  Sockets.init(socket);
+  Sockets.init(io, socket);
 
 });
 
