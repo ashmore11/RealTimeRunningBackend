@@ -15,6 +15,7 @@ var Sockets = {
   bind: function bind() {
 
     this.socket.on('raceUpdated', this.raceUpdated.bind(this));
+    this.socket.on('positionUpdate', this.positionUpdateRecieved.bind(this));
 
     this.socket.on('disconnect', this.disconnected.bind(this));
 
@@ -23,6 +24,12 @@ var Sockets = {
   raceUpdated: function raceUpdated(index, id) {
 
     this.socket.emit('reloadRaceView', index, id);
+
+  },
+
+  positionUpdateRecieved: function positionUpdateRecieved(distance, speed) {
+
+    console.log(distance, speed);
 
   },
 
