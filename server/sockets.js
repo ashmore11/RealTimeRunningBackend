@@ -29,9 +29,9 @@ var Sockets = {
 
   },
 
-  positionUpdateRecieved: function positionUpdateRecieved(distance, speed) {
+  positionUpdateRecieved: function positionUpdateRecieved(id, distance, speed) {
 
-    console.log(distance, speed);
+    this.io.emit('positionUpdateRecieved', id, distance, speed);
 
   },
 
