@@ -17,7 +17,7 @@ var Sockets = {
   bind: function bind() {
 
     this.socket.on('raceUpdated', this.raceUpdated.bind(this));
-    this.socket.on('positionUpdate', this.positionUpdateRecieved.bind(this));
+    this.socket.on('positionUpdate', this.positionUpdateReceived.bind(this));
 
     this.socket.on('disconnect', this.disconnected.bind(this));
 
@@ -29,9 +29,11 @@ var Sockets = {
 
   },
 
-  positionUpdateRecieved: function positionUpdateRecieved(id, distance, speed) {
+  positionUpdateReceived: function positionUpdateReceived(id, distance, speed) {
 
-    this.io.emit('positionUpdateRecieved', id, distance, speed);
+    console.log(id, distance, speed);
+
+    this.io.emit('positionUpdateReceived', id, distance, speed);
 
   },
 
