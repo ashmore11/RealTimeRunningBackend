@@ -31,8 +31,6 @@ var Sockets = {
 
   positionUpdateReceived: function positionUpdateReceived(id, distance, speed) {
 
-    console.log(id, distance, speed);
-
     this.io.emit('positionUpdateReceived', id, distance, speed);
 
   },
