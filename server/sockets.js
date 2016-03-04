@@ -1,37 +1,20 @@
 var Sockets = {
 
-  io: null,
-
   init: function init(io, socket) {
 
     console.log('client connected', socket.id);
 
-    this.io = io;
+    socket.on('raceUpdated', function(index, id) {
 
-    socket.on('raceUpdated', this.raceUpdated.bind(this));
-    socket.on('positionUpdate', this.positionUpdateReceived.bind(this));
+      io.emit('reloadRaceView', index, id);
 
-    socket.on('disconnect', this.disconnected.bind(this));
+    });
 
-  },
+    socket.on('disconnect', function() {
 
-  raceUpdated: function raceUpdated(index, id) {
+      console.log('socket disconnected');
 
-    console.log('event received');
-
-    this.io.emit('reloadRaceView', index, id);
-
-  },
-
-  positionUpdateReceived: function positionUpdateReceived(id, distance, speed) {
-
-    this.io.emit('positionUpdateReceived', id, distance, speed);
-
-  },
-
-  disconnected: function disconnected() {
-
-    console.log('socket disconnected');
+    });
 
   },
 
