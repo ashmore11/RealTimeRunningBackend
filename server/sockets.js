@@ -17,10 +17,10 @@ var Sockets = {
 
   bind: function bind(socket) {
 
-    this.io.clients[socket.id].on('raceUpdated', this.raceUpdated.bind(this));
-    this.io.clients[socket.id].on('positionUpdate', this.positionUpdateReceived.bind(this));
+    socket.on('raceUpdated', this.raceUpdated.bind(this));
+    socket.on('positionUpdate', this.positionUpdateReceived.bind(this));
 
-    this.io.clients[socket.id].on('disconnect', this.disconnected.bind(this));
+    socket.on('disconnect', this.disconnected.bind(this));
 
   },
 
