@@ -1,7 +1,6 @@
 var Sockets = {
 
   io: null,
-  socket: null,
   sockets: [],
 
   init: function init(io, socket) {
@@ -17,6 +16,8 @@ var Sockets = {
   },
 
   bind: function bind(socket) {
+
+    console.log(this.sockets, socket);
 
     this.sockets[socket].on('raceUpdated', this.raceUpdated.bind(this));
     this.sockets[socket].on('positionUpdate', this.positionUpdateReceived.bind(this));
