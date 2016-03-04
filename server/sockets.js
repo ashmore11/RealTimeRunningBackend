@@ -2,24 +2,26 @@ var Sockets = {
 
   io: null,
   socket: null,
+  sockets: [],
 
   init: function init(io, socket) {
 
     console.log('socket connected');
 
     this.io = io;
-    this.socket = socket;
 
-    this.bind();
+    this.sockets.push(socket);
+
+    this.bind(socket);
 
   },
 
-  bind: function bind() {
+  bind: function bind(socket) {
 
-    this.socket.on('raceUpdated', this.raceUpdated.bind(this));
-    this.socket.on('positionUpdate', this.positionUpdateReceived.bind(this));
+    this.sockets[socket].on('raceUpdated', this.raceUpdated.bind(this));
+    this.sockets[socket].on('positionUpdate', this.positionUpdateReceived.bind(this));
 
-    this.socket.on('disconnect', this.disconnected.bind(this));
+    this.sockets[socket].on('disconnect', this.disconnected.bind(this));
 
   },
 
