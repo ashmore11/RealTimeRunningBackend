@@ -15,7 +15,11 @@ server.listen(port);
 
 io.on('connection', function(socket) {
 
-  Sockets.init(io, socket);
+  // Sockets.init(io, socket);
+
+  var newConnection = Object.create({}, Sockets);
+
+  newConnection.init(io, socket);
 
 });
 
