@@ -1,28 +1,39 @@
 var Sockets = {
 
+  io: null,
   socket: null,
+  sockets: [],
 
-  init: function init(socket) {
+  init: function init(io, socket) {
 
     console.log('socket connected');
 
-    this.socket = socket;
+    this.io = io;
 
-    this.bind();
+    sockets.push(socket);
+
+    this.bind(socket);
 
   },
 
-  bind: function bind() {
+  bind: function bind(socket) {
 
-    this.socket.on('raceUpdated', this.raceUpdated.bind(this));
+    this.sockets[socket].on('raceUpdated', this.raceUpdated.bind(this));
+    this.sockets[socket].on('positionUpdate', this.positionUpdateReceived.bind(this));
 
-    this.socket.on('disconnect', this.disconnected.bind(this));
+    this.sockets[socket].on('disconnect', this.disconnected.bind(this));
 
   },
 
   raceUpdated: function raceUpdated(index, id) {
 
-    this.socket.emit('reloadRaceView', index, id);
+    this.io.emit('reloadRaceView', index, id);
+
+  },
+
+  positionUpdateReceived: function positionUpdateReceived(id, distance, speed) {
+
+    this.io.emit('positionUpdateReceived', id, distance, speed);
 
   },
 
