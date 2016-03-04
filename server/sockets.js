@@ -10,7 +10,7 @@ var Sockets = {
 
     this.io = io;
 
-    sockets.push(socket);
+    this.sockets.push(socket);
 
     this.bind(socket);
 
