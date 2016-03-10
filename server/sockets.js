@@ -17,6 +17,8 @@ var Sockets = {
 
   raceUpdated: function raceUpdated(index, raceId, userId) {
 
+    console.log(index, raceId, userId);
+
     this.io.emit('reloadCompetitors', index, raceId, userId);
 
   },
