@@ -21,11 +21,9 @@ var UserApi = {
 
   },
 
-  get: function get(data, res) {
+  get: function get(id, res) {
 
-    console.log(data);
-
-    var params = data !== null ? { 'fbid': { $in: data.ids } } : {}
+    var params = id !== null ? { fbid: id } : {}
 
     UserModel.find(params, function(err, users) {
 
