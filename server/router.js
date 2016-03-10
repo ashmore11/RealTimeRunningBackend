@@ -27,7 +27,7 @@ var AppRouter = {
 
     route.get(function(req, res) {
 
-      UserApi.get(null, res);
+      UserApi.get(req.body, res);
 
     });
 
