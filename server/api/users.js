@@ -25,9 +25,7 @@ var UserApi = {
 
     console.log(data);
 
-    var query = {'fbid': { $in: data.ids };
-
-    var params = data !== null ? query : {}
+    var params = data !== null ? { 'fbid': { $in: data.ids } } : {}
 
     UserModel.find(params, function(err, users) {
 
