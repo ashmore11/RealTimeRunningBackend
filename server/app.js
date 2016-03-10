@@ -1,17 +1,8 @@
 require('dotenv').config({ silent: true });
 
-var cluster    = require('cluster');
-var numCPUs    = require('os').cpus().length;
-var express    = require('express');
-var app        = express();
-var server     = require('http').Server(app);
-var io         = require('socket.io')(server);
-var bodyParser = require('body-parser');
-var mongoose   = require('mongoose');
-var Sockets    = require('./sockets');
-var AppRouter  = require('./router');
-var timeKeeper = require('./timeKeeper');
-var port       = process.env.PORT || 3000;
+var cluster = require('cluster');
+var numCPUs = require('os').cpus().length;
+var http    = require('http');
 
 if (cluster.isMaster) {
 
@@ -29,6 +20,17 @@ if (cluster.isMaster) {
   });
 
 } else {
+
+  var express    = require('express');
+  var app        = express();
+  var server     = http.Server(app);
+  var io         = require('socket.io')(server);
+  var bodyParser = require('body-parser');
+  var mongoose   = require('mongoose');
+  var Sockets    = require('./sockets');
+  var AppRouter  = require('./router');
+  var timeKeeper = require('./timeKeeper');
+  var port       = process.env.PORT || 3000;
 
   server.listen(port);
 
