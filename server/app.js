@@ -44,6 +44,7 @@ router.use(function(req, res, next) {
 AppRouter.home(router.route('/'));
 AppRouter.createUser(router.route('/users'));
 AppRouter.getUsers(router.route('/users'));
+AppRouter.getUsersRange(router.route('/users'));
 AppRouter.getUser(router.route('/users/:id'));
 AppRouter.updateUser(router.route('/users/:id'));
 AppRouter.removeUser(router.route('/users/:id'));

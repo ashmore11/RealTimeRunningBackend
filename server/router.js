@@ -43,6 +43,16 @@ var AppRouter = {
 
   },
 
+  getUsersRange: function getUsersRange(route) {
+
+    route.put(function(req, res) {
+
+      UserApi.getRange(req.body, res);
+
+    });
+
+  },
+
   updateUser: function updateUser(route) {
 
     route.put(function(req, res) {

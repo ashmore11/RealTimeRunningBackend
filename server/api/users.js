@@ -35,6 +35,20 @@ var UserApi = {
 
   },
 
+  getRange: function(data, res) {
+
+    var query = { 'fbid': { $in: data.ids } };
+
+    UserModel.find(query, function(err, users) {
+
+      if (err) res.send(err);
+
+      res.json(users);
+
+    });
+
+  },
+
   update: function update(id, data, res) {
 
     UserModel.update(
