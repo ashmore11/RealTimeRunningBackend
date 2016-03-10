@@ -17,15 +17,13 @@ var Sockets = {
 
   raceUpdated: function raceUpdated(index, raceId, userId) {
 
-    console.log(index, raceId, userId);
-
     this.io.emit('reloadCompetitors', index, raceId, userId);
 
   },
 
-  positionUpdateReceived: function positionUpdateReceived(id, distance, speed) {
+  positionUpdateReceived: function positionUpdateReceived(id, distance, pace) {
 
-    this.io.emit('positionUpdateReceived', id, distance, speed);
+    this.io.emit('positionUpdateReceived', id, distance, pace);
 
   },
 
