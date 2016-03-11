@@ -15,9 +15,9 @@ var Sockets = {
 
   },
 
-  raceUpdated: function raceUpdated(index, raceId, userId) {
+  raceUpdated: function raceUpdated(raceId, userId) {
 
-    this.io.emit('reloadCompetitors', index, raceId, userId);
+    this.io.emit('reloadCompetitors', raceId, userId);
 
   },
 
