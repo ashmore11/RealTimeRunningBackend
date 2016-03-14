@@ -73,7 +73,7 @@ var RaceHandler = {
 
   },
 
-  update: function update(userId, raceId, cb) {
+  updateCompetitors: function updateCompetitors(userId, raceId, callback) {
 
     RaceModel.find({ _id: raceId }, (err, race) => {
 
@@ -90,14 +90,13 @@ var RaceHandler = {
           function(err) {
 
             if (err) {
-              console.log(err);
-              cb(err, null)
+              callback(err);
               return;
             }
 
             console.log('user pulled from race');
 
-            cb(null, 'user pulled from race');
+            callback();
 
           }
 
@@ -112,14 +111,13 @@ var RaceHandler = {
           function(err) {
 
             if (err) {
-              console.log(err);
-              cb(err, null)
+              callback(err);
               return;
             }
 
             console.log('user added to race');
 
-            cb(null, 'user added to race');
+            callback();
 
           }
 

@@ -11,7 +11,6 @@ var Sockets = {
     this.io = io;
 
     socket.on('updateCompetitors', this.updateCompetitors.bind(this));
-    // socket.on('raceUpdated', this.raceUpdated.bind(this));
     socket.on('positionUpdate', this.positionUpdateReceived.bind(this));
 
     socket.on('disconnect', this.disconnected.bind(this));
@@ -20,21 +19,18 @@ var Sockets = {
 
   updateCompetitors: function updateCompetitors(userId, raceId) {
 
-    RaceHandler.update(userId, raceId, (err, success) => {
+    RaceHandler.updateCompetitors(userId, raceId, err => {
 
-      if (err !== null) return;
+      if (err !== null) {
+        console.log(err);
+        return;
+      }
 
       this.io.emit('competitorsUpdated', raceId, userId);
 
     })
 
   },
-
-  // raceUpdated: function raceUpdated(raceId, userId) {
-
-  //   this.io.emit('reloadCompetitors', raceId, userId);
-
-  // },
 
   positionUpdateReceived: function positionUpdateReceived(id, distance, pace) {
 
