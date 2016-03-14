@@ -20,7 +20,7 @@ var Sockets = {
 
   updateCompetitors: function updateCompetitors(userId, raceId) {
 
-    RaceHandler.update(userId, raceId (err, success) => {
+    RaceHandler.update(userId, raceId, (err, success) => {
 
       if (err !== null) return;
 
