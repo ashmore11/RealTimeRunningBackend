@@ -1,3 +1,4 @@
+var _         = require('underscore');
 var RaceModel = require('./models/race');
 
 var RaceHandler = {
