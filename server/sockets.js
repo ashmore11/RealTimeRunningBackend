@@ -21,7 +21,7 @@ var Sockets = {
 
     RaceHandler.updateCompetitors(userId, raceId, err => {
 
-      if (err !== null) {
+      if (err) {
         console.log(err);
         return;
       }
