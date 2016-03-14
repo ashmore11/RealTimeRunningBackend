@@ -72,6 +72,64 @@ var RaceHandler = {
 
   },
 
+  update: function update(userId, raceId, cb) {
+
+    RaceModel.find({ _id: raceId }, (err, race) => {
+
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      if (_.contains(race[0].competitors, userId)) {
+
+        RaceModel.update(
+          { _id: raceId },
+          { $pull: { 'competitors': userId } },
+          function(err) {
+
+            if (err) {
+              console.log(err);
+              cb(err, null)
+              return;
+            }
+
+            console.log('user pulled from race');
+
+            cb(null, 'user pulled from race');
+
+          }
+
+        );
+
+      } else {
+
+        RaceModel.update(
+          { _id: raceId },
+          { $addToSet: { 'competitors': userId } },
+          { safe: true, upsert: true },
+          function(err) {
+
+            if (err) {
+              console.log(err);
+              cb(err, null)
+              return;
+            }
+
+            console.log('user added to race');
+
+            cb(null, 'user added to race');
+
+          }
+
+        );
+
+      }
+
+    });
+
+  },
+
 };
 
 module.exports = RaceHandler;

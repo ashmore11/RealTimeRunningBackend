@@ -1,3 +1,5 @@
+var RaceHandler = require('./raceHandler');
+
 var Sockets = {
 
   io: null,
@@ -8,18 +10,31 @@ var Sockets = {
 
     this.io = io;
 
-    socket.on('raceUpdated', this.raceUpdated.bind(this));
+    socket.on('updateCompetitors', this.updateCompetitors.bind(this));
+    // socket.on('raceUpdated', this.raceUpdated.bind(this));
     socket.on('positionUpdate', this.positionUpdateReceived.bind(this));
 
     socket.on('disconnect', this.disconnected.bind(this));
 
   },
 
-  raceUpdated: function raceUpdated(raceId, userId) {
+  updateCompetitors: function updateCompetitors(userId, raceId) {
 
-    this.io.emit('reloadCompetitors', raceId, userId);
+    RaceHandler.update(userId, raceId (err, success) => {
+
+      if (err !== null) return;
+
+      this.io.emit('competitorsUpdated', raceId, userId);
+
+    })
 
   },
+
+  // raceUpdated: function raceUpdated(raceId, userId) {
+
+  //   this.io.emit('reloadCompetitors', raceId, userId);
+
+  // },
 
   positionUpdateReceived: function positionUpdateReceived(id, distance, pace) {
 
