@@ -1,49 +1,67 @@
-var RaceHandler = require('./raceHandler');
+var socketio = require('socket.io');
+var repo     = require('./repository');
+var expire   = 7200;
 
-var Sockets = {
+function initSockets(server, client) {
 
-  io: null,
+  var io = socketio.listen(server);
 
-  init: function init(io, socket) {
+  io.of('/users').on('connection', function (socket) {
 
-    console.log('client connected', socket.id);
+    socket.on('createUser', function(user) {
 
-    this.io = io;
+      repo.createUser(user, expire * 2, client)
 
-    socket.on('updateCompetitors', this.updateCompetitors.bind(this));
-    socket.on('positionUpdate', this.positionUpdateReceived.bind(this));
+        .done(function() {
 
-    socket.on('disconnect', this.disconnected.bind(this));
+          socket.emit('userCreated', user);
 
-  },
+        }, function(err) {
 
-  updateCompetitors: function updateCompetitors(userId, raceId) {
+          console.log(err, 'Something went wrong!');
 
-    RaceHandler.updateCompetitors(userId, raceId, err => {
+        });
 
-      if (err) {
-        console.log(err);
-        return;
-      }
+    });
 
-      this.io.emit('competitorsUpdated', raceId, userId);
+  });
 
-    })
+  io.of('/races').on('connection', function (socket) {
 
-  },
+    socket.on('createRace', function(userId, raceId) {
 
-  positionUpdateReceived: function positionUpdateReceived(id, distance, pace) {
+      repo.createRace(expire * 2, client)
 
-    this.io.emit('positionUpdateReceived', id, distance, pace);
+        .done(function() {
 
-  },
+          socket.emit('raceCreated');
 
-  disconnected: function disconnected() {
+        }, function(err) {
 
-    console.log('socket disconnected');
+          console.log(err, 'Something went wrong!');
 
-  },
+        });
+
+    });
+
+    socket.on('getRace', function(raceId) {
+
+      repo.getRace(raceId, expire * 2, client)
+
+        .done(function(result) {
+
+          socket.emit('raceFound', result);
+
+        }, function(err) {
+
+          console.log(err, 'Something went wrong!');
+
+        });
+
+    });
+
+  });
 
 };
 
-module.exports = Sockets;
+module.exports = initSockets;

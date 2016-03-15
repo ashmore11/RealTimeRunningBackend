@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <button id="createUser">create user</button>
+  <button id="createRace">create race</button>
+  <br><br>
+  <input id="raceId"></input>
+  <button id="getRace">get Race</button>
+</body>
+<script src="socket.io.js"></script>
+<script type="text/javascript">
+
+  /**
+   * USERS
+   */
+  var users = io('http://localhost:3000/users');
+
+  users.on('connect', function(){
+
+    console.log('users connected');
+
+  });
+
+  users.on('userCreated', function(user) {
+
+    console.log(user);
+
+  });
+
+  var createUser = document.getElementById("createUser");
+
+  createUser.addEventListener('click', function(event) {
+
+    var user = {
+      fbid: "10206900955388308",
+      name: "Scott Ashmore",
+      email: "sashmore@hi-res.net",
+      profileImage: "https://scontent.xx.fbcdn.net/hprofile-xlf1/v/t1.0-1/p200x200/12373166_10208269975012944_1828081703583278634_n.jpg?oh=d07958965630358af0c2577f433ecd87&oe=5722ADF6"
+    };
+
+    users.emit('createUser', user);
+
+  });
+
+  /**
+   * RACES
+   */
+
+  var races = io('http://localhost:3000/races');
+
+  races.on('connect', function(){
+
+    console.log('races connected');
+
+  });
+
+  races.on('raceCreated', function() {
+
+    console.log('race created');
+
+  });
+
+  races.on('raceFound', function(result) {
+
+    console.log(result);
+
+    // var race = JSON.parse(result);
+
+    // console.log('race found', race.competitors);
+
+  });
+
+  var createRace = document.getElementById("createRace");
+
+  createRace.addEventListener('click', function(event) {
+
+    races.emit('createRace');
+
+  });
+
+  var getRace = document.getElementById('getRace');
+  var raceId = document.getElementById('raceId');
+
+  getRace.addEventListener('click', function(event) {
+
+    races.emit('getRace', raceId.value);
+
+  });
+
+</script>
+</html>
