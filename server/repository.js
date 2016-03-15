@@ -4,13 +4,11 @@ var flatten = require('flat');
 
 var RaceModel = {
 
-  createUser: function createUser(user, expire, client) {
-
-    var key = 'user:' + user.fbid;
+  createUser: function createUser(user, client) {
 
     return q.Promise(function(resolve, reject, notify) {
 
-      client.hmset(key, user, function(err) {
+      client.hmset(`users${user.fbid}`, user, function(err) {
 
         if(err === null) {
 
@@ -28,13 +26,10 @@ var RaceModel = {
 
   },
 
-  createRace: function createRace(expire, client) {
-
-    var id = shortid.generate();
-    var key = 'race:' + id;
+  createRace: function createRace(client) {
 
     var race = flatten({
-      id: id,
+      id: shortid.generate(),
       createdAt: new Date().toJSON(),
       competitors: ['12345', '67891'],
       distance: 1,
@@ -43,7 +38,7 @@ var RaceModel = {
 
     return q.Promise(function(resolve, reject, notify) {
 
-      client.hmset(key, race, function(err) {
+      client.hmset(`races:${race.id}`, race, function(err) {
 
         if(err === null) {
 
@@ -61,11 +56,11 @@ var RaceModel = {
 
   },
 
-  getRace: function getRace(id, expire, client) {
+  getRace: function getRace(id, client) {
 
     return q.Promise(function(resolve, reject, notify) {
 
-      client.hgetall(`race:${id}`, function(err, result) {
+      client.hgetall(`races:${id}`, function(err, result) {
 
         if(err === null) {
 
@@ -78,34 +73,6 @@ var RaceModel = {
         }
 
       });
-
-    });
-
-  },
-
-  updateCompetitors: function updateCompetitors(userId, raceId, expire, client) {
-
-    return q.Promise(function(resolve, reject, notify) {
-
-      var obj = {
-        'users': [userId]
-      };
-
-      client
-        .hmset(raceId, obj)
-        .exec(function(err) {
-
-          if(err === null) {
-
-            resolve();
-
-          } else {
-
-            reject(err);
-
-          }
-
-        });
 
     });
 

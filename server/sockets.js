@@ -10,7 +10,7 @@ function initSockets(server, client) {
 
     socket.on('createUser', function(user) {
 
-      repo.createUser(user, expire * 2, client)
+      repo.createUser(user, client)
 
         .done(function() {
 
@@ -30,7 +30,7 @@ function initSockets(server, client) {
 
     socket.on('createRace', function(userId, raceId) {
 
-      repo.createRace(expire * 2, client)
+      repo.createRace(client)
 
         .done(function() {
 
@@ -46,7 +46,7 @@ function initSockets(server, client) {
 
     socket.on('getRace', function(raceId) {
 
-      repo.getRace(raceId, expire * 2, client)
+      repo.getRace(raceId, client)
 
         .done(function(result) {
 
