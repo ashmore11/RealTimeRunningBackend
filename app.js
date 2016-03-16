@@ -2,8 +2,6 @@ if (Meteor.isServer) {
 
   Meteor.startup(function () {
 
-    process.env.MONGO_URL = 'mongodb://ashmore11:13-cheese-ass@ds015398.mongolab.com:15398/real_time_running'
-
     console.log('server started');
 
     timeKeeper();
