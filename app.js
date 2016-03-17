@@ -12,13 +12,13 @@ if (Meteor.isServer) {
 
     var time = new Date;
     var mins = time.getMinutes();
-    var mins = (59 - mins) % 1;
+    var mins = (59 - mins) % 60;
     var secs = time.getSeconds();
 
     // Convert seconds to count down from 60 & if seconds is 60, make it 0
     if (secs !== 60) {
 
-      secs = (59 - secs) % 5;
+      secs = (59 - secs) % 60;
 
     } else {
 

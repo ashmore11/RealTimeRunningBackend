@@ -37,15 +37,15 @@ Meteor.methods({
 
   updateCompetitors: function updateCompetitors(userId, raceId) {
 
-    var race = RaceModel.findOne({ _id: raceId });
+    var race = Races.findOne({ _id: raceId });
 
     if (_.contains(race.competitors, userId)) {
 
-      Races.update({ _id: id }, { $pull: { competitors: userId } });
+      Races.update({ _id: raceId }, { $pull: { competitors: userId } });
 
     } else {
 
-      Races.update({ _id: id }, { $addToSet: { competitors: userId } });
+      Races.update({ _id: raceId }, { $addToSet: { competitors: userId } });
 
     }
 
