@@ -1,11 +1,5 @@
 Meteor.methods({
 
-  createUser: function createUser(data) {
-
-    Users.upsert({ fbid: data.id }, { $set: data });
-
-  },
-
   createRace: function createRace() {
 
     Races.insert({
