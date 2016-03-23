@@ -28,7 +28,7 @@ module.exports = function timeKeeper() {
 
       if (createError) {
 
-        console.log(createError);
+        console.log('create error', createError);
 
       } else {
 
@@ -38,7 +38,7 @@ module.exports = function timeKeeper() {
 
           if (removeError) {
 
-            console.log(removeError);
+            console.log('remove error', removeError);
 
           } else {
 
@@ -48,7 +48,7 @@ module.exports = function timeKeeper() {
 
               if (setLiveError) {
 
-                console.log(setLiveError);
+                console.log('set live error', setLiveError);
 
               } else {
 

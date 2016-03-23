@@ -1,22 +1,23 @@
-var _         = require('underscore');
-var RaceModel = require('./models/race');
+var _       = require('underscore');
+var ShortId = require('shortid');
+var Races   = new Firebase('https://real-time-running.firebaseio.com/races');
 
 var RaceHandler = {
 
   create: function create(callback) {
 
-    var race = RaceModel({
+    var race = {
       createdAt: new Date().toJSON(),
       competitors: [],
       distance: 1,
       live: false,
-    });
+    };
 
-    race.save(function(err) {
+    Races.push().set(race, function(error) {
 
-      if (err) {
+      if (error) {
 
-        callback(err);
+        callback(error);
 
       } else {
 
@@ -30,102 +31,60 @@ var RaceHandler = {
 
   remove: function remove(callback) {
 
-    RaceModel.remove({ live: true }, function(err) {
+    Races.once('value', function(races) {
 
-      if (err) {
+      races.forEach(function(race) {
 
-        callback(err);
+        if (race.child('live').val() == true) {
 
-      } else {
+          Races.child(race.key()).remove(function(error) {
 
-        callback();
+            if (error) {
 
-      }
+              callback(error);
 
-    });
+            } else {
+
+              callback();
+
+            }
+
+          });
+
+        }
+
+      })
+
+    })
 
   },
 
   setLive: function setLive(callback) {
 
-    RaceModel.find({}).sort({ createdAt: 1 }).exec(function(err, races) {
+    Races
+      .orderByChild('createdAt')
+      .limitToFirst(1)
+      .once('value', function(races) {
 
-      RaceModel.update(
-        { _id: races[0]._id },
-        { $set: { "live": true } },
-        function(err) {
+        races.forEach(function(race) {
 
-          if (err) {
+          Races.child(race.key()).update({ live: true }, function(error) {
 
-            callback(err);
+            if (error) {
 
-          } else  {
+                callback(error);
 
-            callback();
+              } else {
 
-          }
+                callback();
 
-        }
+              }
 
-      );
+          });
 
-    });
+        });
 
-  },
-
-  updateCompetitors: function updateCompetitors(userId, raceId, callback) {
-
-    RaceModel.find({ _id: raceId }, (err, race) => {
-
-      if (err) {
-        console.log(err);
-        return;
-      }
-
-      if (_.contains(race[0].competitors, userId)) {
-
-        RaceModel.update(
-          { _id: raceId },
-          { $pull: { 'competitors': userId } },
-          function(err) {
-
-            if (err) {
-              callback(err);
-              return;
-            }
-
-            console.log('user pulled from race');
-
-            callback();
-
-          }
-
-        );
-
-      } else {
-
-        RaceModel.update(
-          { _id: raceId },
-          { $addToSet: { 'competitors': userId } },
-          { safe: true, upsert: true },
-          function(err) {
-
-            if (err) {
-              callback(err);
-              return;
-            }
-
-            console.log('user added to race');
-
-            callback();
-
-          }
-
-        );
-
-      }
-
-    });
+      });
 
   },
 
