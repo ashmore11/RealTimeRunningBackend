@@ -1,6 +1,6 @@
 Meteor.publish('users', function() {
 
-  return Users.find({});
+  return Users.find({}, { fields: { email: 0 } });
 
 });
 
