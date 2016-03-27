@@ -1,11 +1,12 @@
-var Firebase = require('firebase');
-var Ref      = new Firebase('https://real-time-running.firebaseio.com/races');
+var Firebase         = require('firebase');
+var FireBaseTokenGen = require('firebase-token-generator');
 
-var FirebaseTokenGenerator = require('firebase-token-generator');
-var tokenGenerator = new FirebaseTokenGenerator(process.env.FIREBASE_SECRET);
-var token = tokenGenerator.createToken({ uid: 'realTimeRunningAuth' });
+var Races    = new Firebase('https://real-time-running.firebaseio.com/races');
+var tokenGen = new FireBaseTokenGen(process.env.FIREBASE_SECRET);
+var uid      = { uid: 'realTimeRunningAuth' };
+var token    = tokenGen.createToken(uid);
 
-Ref.authWithCustomToken(token, function(error) {
+Races.authWithCustomToken(token, function(error) {
 
   if (error) {
 
@@ -19,4 +20,4 @@ Ref.authWithCustomToken(token, function(error) {
 
 });
 
-module.exports = Ref;
+module.exports = Races;
