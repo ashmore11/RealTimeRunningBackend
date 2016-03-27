@@ -1,6 +1,4 @@
-var _       = require('underscore');
-var ShortId = require('shortid');
-var Races   = new Firebase('https://real-time-running.firebaseio.com/races');
+var Races = require('./firebase')
 
 var RaceHandler = {
 
