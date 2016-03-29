@@ -1,8 +1,8 @@
 {
   "name": "RealTimeRunningBackend",
-  "description": "Backend api for the RealTimeRunning app",
-  "author": "Scott Ashmore dev.scottashmore@gmail.com",
-  "version": "0.0.1",
+  "description": "Backend for the RealTimeRunning app",
+  "author": "Scott Ashmore (dev.scottashmore@gmail.com)",
+  "version": "1.0.0",
   "dependencies": {
     "express": "^4.13.3",
     "firebase": "^2.4.1",

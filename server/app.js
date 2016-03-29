@@ -6,8 +6,8 @@ var port       = process.env.PORT || 3000;
 app.get('/', function(req, res) {
 
   var style = `style="
-    position: absolute; 
-    top: 50%; 
+    position: absolute;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   "`
